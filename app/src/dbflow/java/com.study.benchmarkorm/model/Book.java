@@ -8,7 +8,7 @@ import com.raizlabs.android.dbflow.annotation.Table;
 import com.raizlabs.android.dbflow.structure.BaseModel;
 import com.study.benchmarkorm.LibrariesDB;
 
-@Table(database = LibrariesDB.class)
+@Table(name="Book",database = LibrariesDB.class)
 public class Book extends BaseModel{
     @Column
     @PrimaryKey(autoincrement = true)

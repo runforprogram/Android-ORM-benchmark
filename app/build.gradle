@@ -1,16 +1,16 @@
 apply plugin: 'com.android.application'
-//for dbflow
-//apply plugin: 'com.neenbedankt.android-apt'
+//apply plugin: 'org.greenrobot.greendao' //编译其他时候屏蔽，反之打开
 
-def dbflow_version = "3.1.1"
+
+def dbflow_version = "4.2.4"
 
 
 android {
-    compileSdkVersion 25
-    buildToolsVersion "25.0.2"
+    compileSdkVersion 26
+    buildToolsVersion "27.0.3"
     defaultConfig {
         applicationId "com.study.benchmarkorm"
-        minSdkVersion 19
+        minSdkVersion 17
         targetSdkVersion 25
         versionCode 1
         versionName "1.0"
@@ -22,6 +22,7 @@ android {
             proguardFiles getDefaultProguardFile('proguard-android.txt'), 'proguard-rules.pro'
         }
     }
+    flavorDimensions "color"
 
     productFlavors{
         //Alex
@@ -136,6 +137,15 @@ android {
             buildConfigField "float[]", "expectedUpdate", "{1,2,3,4,5,6,7,8,9,1000}"
             buildConfigField "float[]", "expectedDelete", "{1,2,3,4,5,6,7,8,9,1000}"
         }
+        litepal{
+            applicationIdSuffix ".litepal"
+            versionNameSuffix "-litepal"
+            resValue "string", "app_name", "LitePalBenchmark"
+            buildConfigField "float[]", "expectedRead", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedWrite", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedUpdate", "{1,2,3,4,5,6,7,8,9,1000}"
+            buildConfigField "float[]", "expectedDelete", "{1,2,3,4,5,6,7,8,9,1000}"
+        }
     }
     lintOptions {
         abortOnError false
@@ -151,12 +161,16 @@ dependencies {
     androidTestCompile('com.android.support.test.espresso:espresso-core:2.2.2', {
         exclude group: 'com.android.support', module: 'support-annotations'
     })
-    compile 'com.android.support:appcompat-v7:25.3.1'
-    compile 'com.android.support:design:25.3.1'
+
+    compile 'com.android.support:appcompat-v7:26.1.0'
+    compile 'com.android.support:design:26.1.0'
+    compile 'com.android.support:support-v4:26.1.0'
+
 
     testCompile 'junit:junit:4.12'
 
-    compile 'com.jakewharton:butterknife:7.0.1'
+    compile 'com.jakewharton:butterknife:8.8.1'
+    annotationProcessor 'com.jakewharton:butterknife-compiler:8.8.1'
     compile 'com.diogobernardino:williamchart:2.4.0'
 
     //Realm
@@ -173,21 +187,21 @@ dependencies {
 
 
     //DBFlow
-//    apt "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
-//    dbflowCompile group: 'com.google.code.gson', name: 'gson', version: '2.7'
-//    dbflowCompile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
-//    dbflowCompile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
-//    // sql-cipher database encryption (optional)
-//    dbflowCompile "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}@aar"
+    dbflowAnnotationProcessor "com.github.Raizlabs.DBFlow:dbflow-processor:${dbflow_version}"
+    dbflowCompile group: 'com.google.code.gson', name: 'gson', version: '2.7'
+    dbflowCompile "com.github.Raizlabs.DBFlow:dbflow-core:${dbflow_version}"
+    dbflowCompile "com.github.Raizlabs.DBFlow:dbflow:${dbflow_version}"
+   // sql-cipher database encryption (optional)
+    dbflowCompile "com.github.Raizlabs.DBFlow:dbflow-sqlcipher:${dbflow_version}@aar"
 
     //ORMLite
     ormliteCompile 'com.j256.ormlite:ormlite-android:4.46'
 
     //requery and RXJava
-    requeryCompile "io.reactivex.rxjava2:rxjava:2.0.8"
-    requeryCompile 'io.reactivex.rxjava2:rxandroid:2.0.1'
-    requeryCompile 'io.requery:requery:1.2.1'
-    requeryCompile 'io.requery:requery-android:1.2.1' // for android
+    requeryImplementation "io.reactivex.rxjava2:rxjava:2.0.8"
+    requeryImplementation 'io.reactivex.rxjava2:rxandroid:2.0.1'
+    requeryImplementation 'io.requery:requery:1.2.1'
+    requeryImplementation 'io.requery:requery-android:1.2.1' // for android
     requeryAnnotationProcessor 'io.requery:requery-processor:1.2.1'
 
     //Sugar ORM
@@ -198,6 +212,9 @@ dependencies {
     freezerProvided 'fr.xebia.android.freezer:freezer-annotations:2.0.6'
     freezerAnnotationProcessor 'fr.xebia.android.freezer:freezer-compiler:2.0.6'
 
-    roomCompile 'android.arch.persistence.room:runtime:1.0.0-alpha1'
-    roomAnnotationProcessor 'android.arch.persistence.room:compiler:1.0.0-alpha1'
+    roomCompile ('android.arch.persistence.room:runtime:1.1.1')
+    roomAnnotationProcessor 'android.arch.persistence.room:compiler:1.1.1'
+
+    //litepal
+    litepalCompile 'org.litepal.android:core:2.0.0'
 }

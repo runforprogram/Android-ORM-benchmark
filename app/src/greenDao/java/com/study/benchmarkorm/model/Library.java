@@ -3,6 +3,7 @@ package com.study.benchmarkorm.model;
 import org.greenrobot.greendao.annotation.Entity;
 import org.greenrobot.greendao.annotation.Id;
 import org.greenrobot.greendao.annotation.Generated;
+import org.greenrobot.greendao.annotation.Keep;
 
 @Entity
 public class Library{
@@ -12,7 +13,8 @@ public class Library{
     private String address;
     private String name;
     
-    @Keep public Library(String address, String name) {
+    @Keep
+    public Library(String address, String name) {
         this.address = address;
         this.name = name;
     }

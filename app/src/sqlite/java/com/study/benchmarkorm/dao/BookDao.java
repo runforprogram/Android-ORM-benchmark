@@ -2,6 +2,8 @@ package com.study.benchmarkorm.dao;
 
 import android.database.Cursor;
 import android.database.sqlite.SQLiteDatabase;
+import android.os.Build;
+import android.support.annotation.RequiresApi;
 
 import com.study.benchmarkorm.db.CursorWrappers.BookCursorWrapper;
 import com.study.benchmarkorm.db.CursorWrappers.LibraryCursorWrapper;
@@ -83,6 +85,7 @@ public class BookDao extends AbstractDao<Book> {
                 new String[] {id});
     }
 
+    @RequiresApi(api = Build.VERSION_CODES.KITKAT)
     public Book get(long id) {
         try (BookCursorWrapper cursor = query(
                 BookTable.Cols.ID + " = ?",
