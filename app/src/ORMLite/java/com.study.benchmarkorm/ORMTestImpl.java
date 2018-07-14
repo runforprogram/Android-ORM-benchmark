@@ -4,11 +4,9 @@ import android.content.Context;
 import android.util.Pair;
 import android.widget.Toast;
 
+import com.j256.ormlite.dao.Dao;
 import com.j256.ormlite.stmt.PreparedQuery;
 import com.j256.ormlite.stmt.QueryBuilder;
-import com.study.benchmarkorm.dao.BookDAO;
-import com.study.benchmarkorm.dao.LibraryDAO;
-import com.study.benchmarkorm.dao.PersonDAO;
 import com.study.benchmarkorm.model.Book;
 import com.study.benchmarkorm.model.Library;
 import com.study.benchmarkorm.model.Person;
@@ -18,9 +16,9 @@ import java.util.List;
 import java.util.concurrent.Callable;
 
 public class ORMTestImpl extends ORMTest {
-    private LibraryDAO libraryDAO;
-    private BookDAO bookDAO;
-    private PersonDAO personDAO;
+    private Dao<Library, Integer> libraryDAO;
+    private Dao<Book,Integer> bookDAO;
+    private Dao<Person,Integer> personDAO;
 
     public ORMTestImpl(Context context) {
         super(context);
@@ -29,9 +27,9 @@ public class ORMTestImpl extends ORMTest {
     @Override
     public void initDB(Context context) {
         try {
-            libraryDAO = BenchmarkApplication.HelperFactory.getHelper().getLibraryDAO();
-            bookDAO = BenchmarkApplication.HelperFactory.getHelper().getBookDAO();
-            personDAO = BenchmarkApplication.HelperFactory.getHelper().getPersonDAO();
+            libraryDAO = BenchmarkApplication.HelperFactory.getHelper().getDao(Library.class);
+            bookDAO = BenchmarkApplication.HelperFactory.getHelper().getDao(Book.class);
+            personDAO = BenchmarkApplication.HelperFactory.getHelper().getDao(Person.class);
         } catch (SQLException e) {
             Toast.makeText(context, "Exception in DataBase init. Please, restart the program.",
                     Toast.LENGTH_LONG).show();
@@ -53,6 +51,8 @@ public class ORMTestImpl extends ORMTest {
                 }
             });
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -85,6 +85,8 @@ public class ORMTestImpl extends ORMTest {
             });
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
     }
 
@@ -102,6 +104,8 @@ public class ORMTestImpl extends ORMTest {
                 }
             });
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -121,6 +125,8 @@ public class ORMTestImpl extends ORMTest {
             });
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         try {
             bookDAO.callBatchTasks(new Callable<Object>() {
@@ -133,7 +139,7 @@ public class ORMTestImpl extends ORMTest {
                     return null;
                 }
             });
-        } catch (SQLException e) {
+        } catch (Exception e) {
             e.printStackTrace();
         }
         try {
@@ -148,6 +154,8 @@ public class ORMTestImpl extends ORMTest {
                 }
             });
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -204,6 +212,8 @@ public class ORMTestImpl extends ORMTest {
             });
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         try {
             bookDAO.callBatchTasks(new Callable<Object>() {
@@ -218,6 +228,8 @@ public class ORMTestImpl extends ORMTest {
             });
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         try {
             personDAO.callBatchTasks(new Callable<Object>() {
@@ -231,6 +243,8 @@ public class ORMTestImpl extends ORMTest {
                 }
             });
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }
@@ -250,6 +264,8 @@ public class ORMTestImpl extends ORMTest {
             });
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         try {
             personDAO.callBatchTasks(new Callable<Object>() {
@@ -264,6 +280,8 @@ public class ORMTestImpl extends ORMTest {
             });
         } catch (SQLException e) {
             e.printStackTrace();
+        } catch (Exception e) {
+            e.printStackTrace();
         }
         try {
             libraryDAO.callBatchTasks(new Callable<Object>() {
@@ -277,6 +295,8 @@ public class ORMTestImpl extends ORMTest {
                 }
             });
         } catch (SQLException e) {
+            e.printStackTrace();
+        } catch (Exception e) {
             e.printStackTrace();
         }
     }

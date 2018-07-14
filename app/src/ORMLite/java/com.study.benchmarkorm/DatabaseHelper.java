@@ -7,9 +7,6 @@ import android.util.Log;
 import com.j256.ormlite.android.apptools.OrmLiteSqliteOpenHelper;
 import com.j256.ormlite.support.ConnectionSource;
 import com.j256.ormlite.table.TableUtils;
-import com.study.benchmarkorm.dao.BookDAO;
-import com.study.benchmarkorm.dao.LibraryDAO;
-import com.study.benchmarkorm.dao.PersonDAO;
 import com.study.benchmarkorm.model.Book;
 import com.study.benchmarkorm.model.Library;
 import com.study.benchmarkorm.model.Person;
@@ -24,15 +21,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
 
     private static final int DATABASE_VERSION = 1;
 
-    //ссылки на DAO соответсвующие сущностям, хранимым в БД
-    private BookDAO bookDAO = null;
-    private LibraryDAO libraryDAO = null;
-    private PersonDAO personDAO = null;
 
     public DatabaseHelper(Context context) {
         super(context, DATABASE_NAME, null, DATABASE_VERSION);
     }
-
     //Выполняется, когда файл с БД не найден на устройстве
     @Override
     public void onCreate(SQLiteDatabase db, ConnectionSource connectionSource) {
@@ -46,7 +38,6 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    //Выполняется, когда БД имеет версию отличную от текущей
     @Override
     public void onUpgrade(SQLiteDatabase db, ConnectionSource connectionSource, int oldVer,
                           int newVer) {
@@ -62,35 +53,10 @@ public class DatabaseHelper extends OrmLiteSqliteOpenHelper {
         }
     }
 
-    //синглтон для BookDAO
-    public BookDAO getBookDAO() throws SQLException {
-        if (bookDAO == null) {
-            bookDAO = new BookDAO(getConnectionSource(), Book.class);
-        }
-        return bookDAO;
-    }
-
-    public LibraryDAO getLibraryDAO() throws SQLException {
-        if (libraryDAO == null) {
-            libraryDAO = new LibraryDAO(getConnectionSource(), Library.class);
-        }
-        return libraryDAO;
-    }
-
-    public PersonDAO getPersonDAO() throws SQLException {
-        if (personDAO == null) {
-            personDAO = new PersonDAO(getConnectionSource(), Person.class);
-        }
-        return personDAO;
-    }
 
 
-    //выполняется при закрытии приложения
     @Override
     public void close() {
         super.close();
-        bookDAO = null;
-        libraryDAO = null;
-        personDAO = null;
     }
 }
